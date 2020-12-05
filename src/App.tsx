@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
+import React, { useRef } from 'react';
+ 
+const ComponentToPrint = React.forwardRef((props: any, ref: any) => (
+  <div ref={ref}>Hello World</div>
+));
+ 
+const MyComponent = () => {
+  const componentRef = useRef<any>();
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <ComponentToPrint ref={componentRef} />
+      <button onClick={() => exportComponentAsJPEG(componentRef)}>
+        Export As JPEG
+      </button>
+      <button onClick={() => exportComponentAsPDF(componentRef)}>
+        Export As PDF
+      </button>
+      <button onClick={() => exportComponentAsPNG(componentRef)}>
+        Export As PNG
+      </button>
+    </React.Fragment>
   );
-}
-
-export default App;
+};
+ 
+export default MyComponent;
